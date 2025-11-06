@@ -10,12 +10,10 @@
     $company = false
 @endphp
 <body class="flex items-center justify-center min-h-screen bg-white px-4">
-
 <div class="flex flex-col-reverse md:flex-row w-full max-w-[840px] bg-white shadow-2xl rounded-2xl overflow-hidden">    <!-- Left image section -->
     <div class="w-full md:w-1/2 bg-gray-50 flex items-center justify-center p-6">
       <img src="{{ asset('assets/admin/img/login.png') }}" alt="login illustration" class="w-full max-w-xs">
     </div>
-    
     <!-- Right form section -->
     <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
       <!-- Logo -->
@@ -54,22 +52,14 @@
       <p class="text-center text-sm text-gray-400 mt-6">Copyright © 2025 {{ optional($company)->name }}</p>
     </div>
   </div>
-
-
   @if(session()->exists('danger'))
-
             <script>
-
               //Notify
-
               let message = @json( session('danger'));
               let type = 'danger';
               let iconClass = {
-                
                 danger: 'fa fa-times-circle'
             };
-            
-              
               $.notify({
                 icon: iconClass[type],
                 message
@@ -81,7 +71,6 @@
                 },
                 time: 1000,
               });
-
             </script>
 
       @endif

@@ -39,7 +39,7 @@ class CategoryController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        $title = $request->title;
+        $title = $request->slug;
         $fileName = $this->fileUpload($request,'img','uploads/category',$title);
         $data = $request->only(['title','slug','status']);
         $data['img'] = $fileName;
@@ -50,6 +50,57 @@ class CategoryController extends Controller
             'message' => "Successfully Stored Category!",
             'datas' => Category::latest()->get()
         ]);
+    }
+
+    public function update(Request $request,int $id){
+
+        $validator = Validator::make($request->all(),[
+            'title' => 'required|string|min:3',
+            'slug' => 'required',
+            'status' => 'required',
+            'img' => 'nullable|image|mimes:jpg,jpeg,png'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $editItem = Category::findOrFail($id);
+
+        $data = $request->only(['title','slug','status']);
+        if($request->hasFile('img')){
+            //unlink file
+            if(file_exists(public_path($editItem->img))){
+                unlink(public_path($editItem->img));
+            }
+            //upload new file
+            $title = $request->slug;
+            $fileName = $this->fileUpload($request,'img','uploads/category',$title);
+            $data['img'] = $fileName;
+        }
+        $editItem->update($data);
+        return response()->json([
+            'status' => true,
+            'datas' => Category::latest()->get(),
+            'message' => "Successfully Updated Category"
+        ]);
+    }
+
+    public function destroy(int $id){
+        $data = Category::findOrFail($id);
+        //unlink file
+        if(file_exists(public_path($data->img))){
+            unlink(public_path($data->img));
+        }
+        $data->delete();
+        return response()->json([
+            'status' => true,
+            'message' => "Successfully Deleted Category"
+        ]);
+
     }
 
 

@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="card-action d-flex justify-content-end">
-                            <button class="btn btn-sm btn-danger me-3" @click="form_reset()" type="button">Cancel</button>
+                            <button class="btn btn-sm btn-danger me-3" type="button">Cancel</button>
                             <button class="btn btn-sm btn-success" type="submit">Submit</button>
                         </div>
                     </div>
@@ -66,11 +66,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header overflow-hidden d-flex justify-content-between">
-                        <div class="card-title">Category Table</div>
-                        <div>
-                            <input type="text" name="" id="" class="form-control form-control-sm">
-                        </div>
+                    <div class="card-header">
+                        <div class="card-title">Users Table</div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -112,7 +109,12 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
+
+
 @endsection
 
 @push('script')
@@ -138,67 +140,30 @@
                         title: null,
                         status: 'active',
                     },
-                    errors: {},
+                    errors: {
+                        title: null,
+                        status: null,
+                        img: null,
+                        slug: null
+                    },
                     isEdit: {
                         status: false,
                         id: null
                     },
                     previewImage: "{{ asset('assets/admin/img/no-img.png') }}"
+
                 }
             },
             methods: {
-                notify_message(message){
-                    var content = {};
-
-                    content.message = message;
-                    content.icon = "fa fa-bell";
-                    $.notify(content, {
-                        placement: {
-                                from: 'top',
-                                align: 'right',
-                            },
-                            time: 500,
-                            delay: 0,
-                    });
-                },
-                form_reset(){
-                    this.previewImage = "{{ asset('assets/admin/img/no-img.png') }}";
-                    this.formValue.title = null;
-                    this.formValue.formValue = 'active';
-                    this.errors = {};
-                    this.isEdit = {
-                        status: false,
-                        id: null
-                    };
-                
-                },
                 async saveData(e) {
                     let data = new FormData(e.target);
                     loder_open()
-                    let res;
-                    if (this.isEdit.status) {
-                        let editId = this.isEdit.id;
-                        res = await axios.post(`/api/category/${editId}/update`, data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
-                        if(res.data.status == true){
-                            this.notify_message(res.data.message)
-                            this.isEdit = {
-                                status: false,
-                                id: null
-                            }
+                    let res = await axios.post('/api/category/store', data, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
                         }
-                        
-                    } else {
-                        res = await axios.post('/api/category/store', data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
+                    })
 
-                    }
                     if (res.data.status == false) {
                         let errors = res.data.errors;
                         for (key in errors) {
@@ -207,14 +172,17 @@
                         loder_close()
                     } else {
                         e.target.reset()
-                        this.form_reset()
-                        this.datas = res.data.datas;
-                        loder_close();
+                        this.previewImage = "{{ asset('assets/admin/img/no-img.png') }}";
+                        this.formValue.title = null;
+                        this.datas = res.data.datas
+                        loder_close()
                     }
                 },
+
                 getImageUrl(path) {
                     return `${window.location.origin}/${path}`;
                 },
+
                 previewImageFunction(e) {
                     let file = e.target.files[0];
                     if (file) {
@@ -226,6 +194,10 @@
                     }
                 },
                 deleteData(id) {
+                    console.log(id);
+                    //category.destroy
+
+
                     swal({
                         title: "Are you sure?",
                         text: "You Want To Delete this!",
@@ -246,28 +218,28 @@
                         if (willDelete) {
                             loder_open()
                             axios.delete(`/api/category/${id}/destroy`)
-                                .then(res => {
-                                    if (res.data.status) {
-                                        let newdata = this.datas.filter((ele) => {
-                                            return ele.id != id
-                                        })
-                                        this.datas = newdata;
-
-                                    }
-                                    loder_close();
-                                    swal(`${res.data.message}`, {
-                                        icon: "success",
-                                        buttons: {
-                                            confirm: {
-                                                className: "btn btn-success",
-                                            },
+                            .then(res=>{
+                                if(res.data.status){
+                                    let newdata = this.datas.filter((ele)=>{
+                                        return ele.id != id
+                                    })
+                                    this.datas = newdata;
+                                    
+                                }
+                                loder_close();
+                                swal(`${res.data.message}`, {
+                                    icon: "success",
+                                    buttons: {
+                                        confirm: {
+                                            className: "btn btn-success",
                                         },
-                                    });
-
-                                })
-                                .catch(function (error) {
-                                    console.log(error);
+                                    },
                                 });
+                                
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
                         } else {
                             swal("Your file is safe!", {
                                 buttons: {
@@ -279,26 +251,9 @@
                         }
                     });
                 },
-
-
                 updateData(id) {
-                    let editData = this.datas.find((ele) => {
-                        if (ele.id == id) {
-                            return ele;
-                        }
-                    })
-                    this.isEdit = {
-                        status: true,
-                        id: id
-                    };
-                    this.formValue = {
-                        title: editData.title,
-                        status: editData.status
-                    }
-                    this.previewImage = this.getImageUrl(editData.img)
-                },
-
-                
+                    console.log(id);
+                }
             },
             computed: {
                 slug() {
@@ -308,13 +263,14 @@
                 }
             },
             async mounted() {
+            console.log('astace.....')
                 let datas = await axios.get('/api/admin-all_cagegory');
                 this.datas = datas.data.datas;
                 loder_close();
-
+                console.log('astace.....')
             }
         }).mount('#app')
 
-
+        
     </script>
 @endpush
