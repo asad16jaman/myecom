@@ -24,6 +24,21 @@ class CategoryController extends Controller
         return view('admin.pages.category.create');
     }
 
+    public function search_cat($name=null){
+
+        if(trim($name)){
+             $datas = Category::where('title','like',"%".$name."%")->latest()->get();
+        }else{
+            $datas = Category::latest()->get();
+        }
+       
+
+        return response()->json([
+            'status' => true,
+            'datas' => $datas
+        ]);
+    }
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[

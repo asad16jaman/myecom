@@ -33,8 +33,8 @@
                                 </div>
                                 <label for="category_status" class="col-md-2 col-sm-4">Status</label>
                                 <div class="col-md-4 col-sm-8">
-                                    <select name="status" id="" class="form-select form-control-sm">
-                                        <option value="active" selected>Active</option>
+                                    <select name="status" id="" v-model="formValue.status" class="form-select form-control-sm">
+                                        <option value="active">Active</option>
                                         <option value="inactive">InActive</option>
                                     </select>
                                     <p class="text-danger"></p>
@@ -66,10 +66,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header overflow-hidden d-flex justify-content-between">
-                        <div class="card-title">Category Table</div>
+                    <div class="card-header overflow-hidden d-flex justify-content-between bg-secondary">
+                        <div class="card-title text-white">Category Table</div>
                         <div>
-                            <input type="text" name="" id="" class="form-control form-control-sm">
+                            <input type="text" @change="serceTriger" placeholder="Search By Name" id="" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="card-body">
@@ -96,10 +96,10 @@
                                         <td>@{{ data.slug }}</td>
                                         <td>@{{ data.status }}</td>
                                         <td>
-                                            <button @click="updateData(data.id)">
+                                            <button @click="updateData(data.id)" class="btn-action">
                                                 <i class="fas fa-edit iconsize"></i>
                                             </button>
-                                            <button @click="deleteData(data.id)">
+                                            <button @click="deleteData(data.id)" class="btn-action">
                                                 <i class="fas fa-trash-alt iconsize text-danger"></i>
                                             </button>
                                         </td>
@@ -163,8 +163,10 @@
                 },
                 form_reset(){
                     this.previewImage = "{{ asset('assets/admin/img/no-img.png') }}";
-                    this.formValue.title = null;
-                    this.formValue.formValue = 'active';
+                    this.formValue= {
+                        title: null,
+                        status: 'active',
+                    }
                     this.errors = {};
                     this.isEdit = {
                         status: false,
@@ -212,6 +214,16 @@
                         loder_close();
                     }
                 },
+                async serceTriger(e){
+                   let searchData = e.target.value;
+                   let get_datas = await axios.get(`/api/search_category/${searchData}`);
+                //    console.log(get_datas)
+                   console.log(get_datas)
+                   this.datas =  get_datas.data.datas
+                //    console.log(this.datas);
+
+                },
+
                 getImageUrl(path) {
                     return `${window.location.origin}/${path}`;
                 },
