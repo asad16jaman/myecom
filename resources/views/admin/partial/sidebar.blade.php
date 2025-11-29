@@ -78,6 +78,28 @@
                         </li>
 
                         <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarSubCategory">
+                                <i class="fas fa-th-list"></i>
+                                <p>Sub Category</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarSubCategory">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.subcategory') }}">
+                                            <span class="sub-item">Create</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="icon-menu.html">
+                                            <span class="sub-item">Show</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#forms">
                                 <i class="fas fa-pen-square"></i>
                                 <p>Forms</p>

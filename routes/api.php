@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +34,12 @@ Route::get('/search_category/{name?}',[CategoryController::class,'search_cat'])-
 Route::post('/category/store',[CategoryController::class,'store'])->name('category.store');
 Route::post('/category/{id}/update',[CategoryController::class,'update'])->name('category.update');
 Route::delete('/category/{id}/destroy',[CategoryController::class,'destroy'])->name('category.destroy');
+
+
+//sub-category routes is hare
+Route::get('/admin-all_subcagegory',[SubCategoryController::class,'allCategory'])->name('all_subcategory');
+Route::get('/search_subcategory/{name?}',[SubCategoryController::class,'search_cat'])->name('subcategory.search');
+Route::post('/subcategory/store',[SubCategoryController::class,'store'])->name('subcategory.store');
+Route::post('/subcategory/{id}/update',[SubCategoryController::class,'update'])->name('subcategory.update');
+Route::delete('/subcategory/{id}/destroy',[SubCategoryController::class,'destroy'])->name('subcategory.destroy');
 

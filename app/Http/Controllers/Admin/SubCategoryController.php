@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     //
 
     public function allCategory(){
-        $allCat = Category::latest()->get();
+        $allCat = Subcategory::latest()->get();
         return response()->json([
             'status' => true,
             'datas' => $allCat
@@ -22,14 +22,15 @@ class CategoryController extends Controller
 
 
     public function create(){
-        return view('admin.pages.category.create');
+        $categories = Category::latest()->where('status','=','active')->get();
+        return view('admin.pages.sub_category.create',compact('categories'));
     }
 
     public function search_cat($name=null){
         if(trim($name)){
-             $datas = Category::where('title','like',"%".$name."%")->latest()->get();
+             $datas = Subcategory::where('title','like',"%".$name."%")->latest()->get();
         }else{
-            $datas = Category::latest()->get();
+            $datas = Subcategory::latest()->get();
         }
         return response()->json([
             'status' => true,
@@ -55,11 +56,11 @@ class CategoryController extends Controller
         $fileName = $this->fileUpload($request,'img','uploads/category',$title);
         $data = $request->only(['title','slug','status']);
         $data['img'] = $fileName;
-        Category::create($data);
+        Subcategory::create($data);
         return response()->json([
             'status' => true,
             'message' => "Successfully Stored Category!",
-            'datas' => Category::latest()->get()
+            'datas' => Subcategory::latest()->get()
         ]);
     }
 
@@ -77,7 +78,7 @@ class CategoryController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        $editItem = Category::findOrFail($id);
+        $editItem = Subcategory::findOrFail($id);
         $data = $request->only(['title','slug','status']);
         if($request->hasFile('img')){
             //unlink file
@@ -92,13 +93,13 @@ class CategoryController extends Controller
         $editItem->update($data);
         return response()->json([
             'status' => true,
-            'datas' => Category::latest()->get(),
+            'datas' => Subcategory::latest()->get(),
             'message' => "Successfully Updated Category"
         ]);
     }
 
     public function destroy(int $id){
-        $data = Category::findOrFail($id);
+        $data = Subcategory::findOrFail($id);
         //unlink file
         if(file_exists(public_path($data->img))){
             unlink(public_path($data->img));
@@ -109,11 +110,4 @@ class CategoryController extends Controller
             'message' => "Successfully Deleted Category"
         ]);
     }
-
-
-
-
-
-
-
 }
