@@ -28,6 +28,8 @@ Route::post('/user/{id}/delete',[UserController::class,'deleteUser'])->name('del
 
 //category routes is hare
 Route::get('/admin-all_cagegory',[CategoryController::class,'allCategory'])->name('all_category');
+Route::get('/search_category/{name?}',[CategoryController::class,'search_cat'])->name('category.search');
 Route::post('/category/store',[CategoryController::class,'store'])->name('category.store');
 Route::post('/category/{id}/update',[CategoryController::class,'update'])->name('category.update');
 Route::delete('/category/{id}/destroy',[CategoryController::class,'destroy'])->name('category.destroy');
+
