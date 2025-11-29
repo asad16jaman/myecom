@@ -297,8 +297,6 @@
                     }
                     this.previewImage = this.getImageUrl(editData.img)
                 },
-
-                
             },
             computed: {
                 slug() {
