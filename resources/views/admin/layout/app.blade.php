@@ -166,7 +166,6 @@
 
 <body>
 
-    
     <div id="loder" class="loder_container">
        <div class="loder-center">
          <div class="lds-roller">

@@ -3,9 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
+    use SoftDeletes;
     /**
      * Run the migrations.
      */
@@ -15,12 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->nullable();
-            $table->string('img')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keyword')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete()->cascadeOnDelete();
-            $table->enum('status',['active','inactive'])->default('active');
-            $table->boolean('is_delete')->default(false);
-            $table->ipAddress('ipAddress')->nullable();
+            $table->boolean('status')->default(true);
+            $table->ipAddress('created_by')->nullable();
             $table->timestamps();
+
+            // Soft delete column
+            $table->softDeletes();
+
         });
     }
 

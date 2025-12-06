@@ -19,49 +19,51 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <label for="category_title" class="col-md-2 col-sm-4">Title</label>
-                                <div class="col-md-4 col-sm-8 mb-2">
-                                    <input type="text" v-model="formValue.title" name="title" id="category_title"
-                                        placeholder="Type Category Title" class="form-control form-control-sm">
-                                    <p class="text-danger">@{{ errors?.title }}</p>
-                                </div>
-                                <label for="category_slug" class="col-md-2 col-sm-4">Slug</label>
-                                <div class="col-md-4 col-sm-8">
-                                    <input type="text" :value="slug" name="slug" readonly id="category_slug"
-                                        placeholder="Type Slgu" class="form-control form-control-sm">
 
-                                </div>
-                                <label for="category_status" class="col-md-2 col-sm-4">Status</label>
-                                <div class="col-md-4 col-sm-8">
-                                    <select name="status" id="" v-model="formValue.status" class="form-select form-control-sm">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">InActive</option>
-                                    </select>
-                                    <p class="text-danger"></p>
+                                <label for="category_name" class="col-md-1 col-12">Name*</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <input type="text" v-model="formValue.name" name="name" id="category_name"
+                                        placeholder="Type  Name" class="form-control form-control-sm mb-2">
+                                    <p class="text-danger">@{{ errors?.name }}</p>
                                 </div>
 
-                                <label for="" class="col-md-2 col-sm-4">Image</label>
-                                <div class="col-md-4 col-sm-8  d-flex justify-content-between">
-                                    <div>
-                                        <input type="file" @change="previewImageFunction" name="img" id="imageInput"
-                                            class="form-control form-control-sm">
-                                        <p class="text-danger">JPG,JPEG,PNG (500px X 500px)</p>
-                                        <p class="text-danger">@{{ errors?.img }}</p>
-                                    </div>
-                                    <div style="width:60px;height:60px">
-                                        <img id="previewImage" class="img-fluid" :src="previewImage" alt="">
-                                    </div>
+                                <label for="category_slug" class="col-md-1 col-12 mb-2">Slug*</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <input type="text" v-model="slug" name="slug" readonly id="slug"
+                                        placeholder="Type Slgu" class="form-control form-control-sm mb-2">
                                 </div>
 
-                                 <label for="" class="col-md-2 col-sm-4">SubCategory</label>
-                                <div class="col-md-4 col-sm-8  d-flex justify-content-between">
-                                    <select name="category" id="" class="form-select form-control-sm">
+                                <label for="category_slug" class="col-md-1 col-12 mb-2 g-0">Category*</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <select name="category_id" v-model="formValue.category_id" id="" class="form-select form-select-sm">
+                                        <option value="">--Select Category--</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->title }}</option>
                                         @endforeach
                                     </select>
-                                    
+                                     <p>@{{ errors?.category_id }}</p>
                                 </div>
+
+                                <label for="meta_title" class="col-md-1 col-12">M. Title</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <input type="text" name="meta_title" v-model="formValue.meta_title" id="meta_title"
+                                        placeholder="Type Meta Title" class="form-control form-control-sm mb-2">
+                                    <p class="text-danger">@{{ errors?.meta_title }}</p>
+                                </div>
+
+                                <label for="meta_keyword" class="col-md-1 col-12 g-0">M_Keyword</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <input type="text" name="meta_keyword" v-model="formValue.meta_keyword" id="meta_keyword"
+                                        placeholder="Type Meta Keyword" class="form-control form-control-sm mb-2">
+                                    <p class="text-danger">@{{ errors?.meta_keyword }}</p>
+                                </div>
+
+                               <label for="meta_description" class="col-md-1 col-12">M. Des</label>
+                                <div class="col-md-3 col-12 mb-2">
+                                    <textarea name="meta_description" class="form-control form-control-sm" id="meta_description" placeholder="Type Meta Description">@{{ formValue.meta_description }}</textarea>
+                                    <p class="text-danger">@{{ errors?.meta_description }}</p>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card-action d-flex justify-content-end">
@@ -79,7 +81,7 @@
                     <div class="card-header overflow-hidden d-flex justify-content-between bg-secondary">
                         <div class="card-title text-white">Category Table</div>
                         <div>
-                            <input type="text" @change="serceTriger" placeholder="Search By Name" id="" class="form-control form-control-sm">
+                            <input type="text" v-model="searcevalue" placeholder="Search By Name" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="card-body">
@@ -87,11 +89,12 @@
                             <table class="display table table-border table-hover basic_thead_bg">
                                 <thead>
                                     <tr>
-                                        <th>SL NO</th>
-                                        <th>Image</th>
+                                        <th>Sl No</th>
                                         <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Status</th>
+                                        <th>Category</th>
+                                        <th>M.Title</th>
+                                        <th>M.Key</th>
+                                        <th>M.Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -99,12 +102,11 @@
                                 <tbody>
                                     <tr v-for="(data,ind) in datas">
                                         <td>@{{ ind+1 }}</td>
-                                        <td>
-                                            <img :src="getImageUrl(data.img)" style="width: 40px;height:20px" alt="">
-                                        </td>
-                                        <td>@{{ data.title }}</td>
-                                        <td>@{{ data.slug }}</td>
-                                        <td>@{{ data.status }}</td>
+                                        <td>@{{ data.name }}</td>
+                                        <td>@{{ data.category.title }}</td>
+                                        <td>@{{ data.meta_title }}</td>
+                                        <td>@{{ data.meta_keyword }}</td>
+                                        <td>@{{ data.meta_description }}</td>
                                         <td>
                                             <button @click="updateData(data.id)" class="btn-action">
                                                 <i class="fas fa-edit iconsize"></i>
@@ -145,15 +147,18 @@
                 return {
                     datas: [],
                     formValue: {
-                        title: null,
-                        status: 'active',
+                        name: '',
+                        category_id: '',
+                        meta_title:'',
+                        meta_keyword:'',
+                        meta_description:''
                     },
                     errors: {},
                     isEdit: {
                         status: false,
                         id: null
                     },
-                    previewImage: "{{ asset('assets/admin/img/no-img.png') }}"
+                    searcevalue : ''
                 }
             },
             methods: {
@@ -171,12 +176,17 @@
                             delay: 0,
                     });
                 },
+
                 form_reset(){
-                    this.previewImage = "{{ asset('assets/admin/img/no-img.png') }}";
+                   
                     this.formValue= {
-                        title: null,
-                        status: 'active',
-                    }
+                        name: null,
+                        category_id: '',
+                        meta_title:null,
+                        meta_keyword:null,
+                        meta_description:''
+                    },
+                    
                     this.errors = {};
                     this.isEdit = {
                         status: false,
@@ -184,17 +194,20 @@
                     };
                 
                 },
+
+                // async serceTriger(e){
+                //    let searchData = e.target.value;
+                //    let get_datas = await axios.get(`/api/search_subcategory/${searchData}`);
+                //    this.datas =  get_datas.data.datas
+                // },
+                
                 async saveData(e) {
                     let data = new FormData(e.target);
                     loder_open()
                     let res;
                     if (this.isEdit.status) {
                         let editId = this.isEdit.id;
-                        res = await axios.post(`/api/subcategory/${editId}/update`, data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
+                        res = await axios.post(`/api/subcategory/${editId}/update`, data)
                         if(res.data.status == true){
                             this.notify_message(res.data.message)
                             this.isEdit = {
@@ -204,13 +217,9 @@
                         }
                         
                     } else {
-                        res = await axios.post('/api/subcategory/store', data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
-
+                        res = await axios.post('/api/subcategory/store', data)
                     }
+
                     if (res.data.status == false) {
                         let errors = res.data.errors;
                         for (key in errors) {
@@ -224,27 +233,19 @@
                         loder_close();
                     }
                 },
-                async serceTriger(e){
-                   let searchData = e.target.value;
-                   let get_datas = await axios.get(`/api/search_subcategory/${searchData}`);
-                //    console.log(get_datas)
-                   console.log(get_datas)
-                   this.datas =  get_datas.data.datas
-                //    console.log(this.datas);
-
-                },
-
-                getImageUrl(path) {
-                    return `${window.location.origin}/${path}`;
-                },
-                previewImageFunction(e) {
-                    let file = e.target.files[0];
-                    if (file) {
-                        let reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = (event) => {
-                            this.previewImage = event.target.result;
-                        };
+                
+                updateData(id) {
+                    let editData = this.datas.find((ele) => {
+                        if (ele.id == id) {
+                            return ele;
+                        }
+                    })
+                    this.isEdit = {
+                        status: true,
+                        id: id
+                    };
+                    this.formValue = {
+                        ...editData
                     }
                 },
                 deleteData(id) {
@@ -264,7 +265,6 @@
                             },
                         },
                     }).then((willDelete) => {
-
                         if (willDelete) {
                             loder_open()
                             axios.delete(`/api/subcategory/${id}/destroy`)
@@ -274,7 +274,6 @@
                                             return ele.id != id
                                         })
                                         this.datas = newdata;
-
                                     }
                                     loder_close();
                                     swal(`${res.data.message}`, {
@@ -285,7 +284,6 @@
                                             },
                                         },
                                     });
-
                                 })
                                 .catch(function (error) {
                                     console.log(error);
@@ -302,32 +300,23 @@
                     });
                 },
 
+            },
 
-                updateData(id) {
-                    let editData = this.datas.find((ele) => {
-                        if (ele.id == id) {
-                            return ele;
-                        }
-                    })
-                    this.isEdit = {
-                        status: true,
-                        id: id
-                    };
-                    this.formValue = {
-                        title: editData.title,
-                        status: editData.status
-                    }
-                    this.previewImage = this.getImageUrl(editData.img)
-                },
+            watch: {
+                async searcevalue(newVal){
+                    let get_datas = await axios.get(`/api/search_subcategory/${newVal}`);
+                   this.datas =  get_datas.data.datas
+                }
             },
             computed: {
                 slug() {
-                    return this.formValue.title
-                        ? this.formValue.title.trim().split(' ').join('-').toLowerCase()
+                    return this.formValue.name
+                        ? this.formValue.name.trim().split(' ').join('-').toLowerCase()
                         : '';
                 }
             },
             async mounted() {
+
                 let datas = await axios.get('/api/admin-all_subcagegory');
                 this.datas = datas.data.datas;
                 loder_close();

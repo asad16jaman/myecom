@@ -26,7 +26,12 @@ Route::get('/logout',[AuthController::class,'adminLogout'])->name('logout');
 
 Route::group(['prefix' => 'admin','middleware' => 'authAdmin'],function(){   
 
-    Route::get('dashboard',[DashboardController::class , 'index'])->name('dashboard');
+    Route::get('/',[DashboardController::class , 'index'])->name('dashboard');
+    
+});
+
+Route::group(['prefix' => 'admin','middleware' => 'authAdmin'],function(){   
+
     Route::get('list',[DashboardController::class , 'ddd'])->name('list');
     Route::get('/user',[UserController::class,'create'])->name('admin.user');
 

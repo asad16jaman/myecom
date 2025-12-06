@@ -214,19 +214,18 @@
                         loder_close();
                     }
                 },
+                
                 async serceTriger(e){
                    let searchData = e.target.value;
                    let get_datas = await axios.get(`/api/search_category/${searchData}`);
-                //    console.log(get_datas)
                    console.log(get_datas)
                    this.datas =  get_datas.data.datas
-                //    console.log(this.datas);
-
                 },
 
                 getImageUrl(path) {
                     return `${window.location.origin}/${path}`;
                 },
+
                 previewImageFunction(e) {
                     let file = e.target.files[0];
                     if (file) {
@@ -237,6 +236,7 @@
                         };
                     }
                 },
+
                 deleteData(id) {
                     swal({
                         title: "Are you sure?",
@@ -292,7 +292,6 @@
                     });
                 },
 
-
                 updateData(id) {
                     let editData = this.datas.find((ele) => {
                         if (ele.id == id) {
@@ -310,6 +309,7 @@
                     this.previewImage = this.getImageUrl(editData.img)
                 },
             },
+            
             computed: {
                 slug() {
                     return this.formValue.title
