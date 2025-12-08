@@ -44,6 +44,21 @@ class Controller extends BaseController
         return false;
     }
 
+    public function s_Response($message,$data){
+        return response()->json([
+            'status' => true,
+            'message' => $message,
+            'data' => $data
+        ]);
+    }
+
+    public function e_Response($message,$data){
+        return response()->json([
+            'status' => true,
+            'message' => $message,
+        ]);
+    }
+
     
 
 

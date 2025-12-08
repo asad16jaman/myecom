@@ -100,6 +100,50 @@
                         </li>
 
                         <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarBrand">
+                                <i class="fas fa-th-list"></i>
+                                <p>Brand</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarBrand">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.brand') }}">
+                                            <span class="sub-item">Create</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Show</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarColor">
+                                <i class="fas fa-th-list"></i>
+                                <p>Color</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarColor">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.color') }}">
+                                            <span class="sub-item">Create</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Show</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!-- <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#forms">
                                 <i class="fas fa-pen-square"></i>
                                 <p>Forms</p>
@@ -114,22 +158,22 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
-                        <li class="nav-item">
+                        </li> -->
+                        <!-- <li class="nav-item">
                             <a href="widgets.html">
                                 <i class="fas fa-desktop"></i>
                                 <p>Widgets</p>
                                 <span class="badge badge-success">4</span>
                             </a>
-                        </li>
+                        </li> -->
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="../../documentation/index.html">
                                 <i class="fas fa-file"></i>
                                 <p>Documentation</p>
                                 <span class="badge badge-secondary">1</span>
                             </a>
-                        </li>
+                        </li> -->
 
                        
                     </ul>

@@ -87,12 +87,7 @@ class SubCategoryController extends Controller
     }
 
     public function destroy(int $id){
-
         $data = Subcategory::findOrFail($id);
-      
-
-        //unlink file
-        
         $data->delete();
         return response()->json([
             'status' => true,

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Models\Subcategory;
@@ -42,4 +44,18 @@ Route::get('/search_subcategory/{name?}',[SubCategoryController::class,'search_c
 Route::post('/subcategory/store',[SubCategoryController::class,'store'])->name('subcategory.store');
 Route::post('/subcategory/{id}/update',[SubCategoryController::class,'update'])->name('subcategory.update');
 Route::delete('/subcategory/{id}/destroy',[SubCategoryController::class,'destroy'])->name('subcategory.destroy');
+
+//brand routes is hare
+Route::get('/brand',[BrandController::class,'allbrands'])->name('brand');
+Route::get('/brand_search/{name?}',[BrandController::class,'search'])->name('brand.search');
+Route::post('/brand/store',[BrandController::class,'store'])->name('brand.store');
+Route::post('/brand/{id}/update',[BrandController::class,'update'])->name('brand.update');
+Route::delete('/brand/{id}/destroy',[BrandController::class,'destroy'])->name('brand.destroy');
+
+//Colour routes is hare
+Route::get('/colour',[ColorController::class,'allColor'])->name('color');
+Route::get('/colour_search/{name?}',[ColorController::class,'search'])->name('color.search');
+Route::post('/colour/store',[ColorController::class,'store'])->name('color.store');
+Route::post('/colour/{id}/update',[ColorController::class,'update'])->name('color.update');
+Route::delete('/colour/{id}/destroy',[ColorController::class,'destroy'])->name('color.destroy');
 

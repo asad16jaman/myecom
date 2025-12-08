@@ -212,7 +212,6 @@
                         this.form_reset()
                         this.datas = res.data.datas;
                         loder_close();
-                        this.notify_message("succesfully kkk")
                     }
                 },
                 

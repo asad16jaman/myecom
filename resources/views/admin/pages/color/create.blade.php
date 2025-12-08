@@ -1,5 +1,5 @@
 @extends('admin.layout.app')
-@section('title', "Create Sub Category")
+@section('title', "Create Color")
 @push('style')
     <style>
     </style>
@@ -8,54 +8,29 @@
 @section('content')
 
     <div class="page-inner" id="app">
-        @include('admin.partial.breadcrmp', ['var1' => "SubCategory", 'var2' => 'CREATE'])
+        @include('admin.partial.breadcrmp', ['var1' => "Colour", 'var2' => 'CREATE'])
         <div class="row">
             <div class="col-12">
                 <form action="" method="post" @submit.prevent="saveData">
                     <div class="card">
                         <div class="card-header bg-secondary text-white">
-                            <div class="card-title text-white"> <i class="fas fa-user"></i>Sub Category Create Form</div>
+                            <div class="card-title text-white"> <i class="fas fa-user"></i>Color Create Form</div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <label for="category_name" class="col-md-1 col-12">Name*</label>
-                                <div class="col-md-3 col-12 mb-2">
+                                <label for="category_name" class="col-md-2 col-12">Colour Name*</label>
+                                <div class="col-md-4 col-12 mb-2">
                                     <input type="text" v-model="formValue.name" name="name" id="category_name"
                                         placeholder="Type  Name" class="form-control form-control-sm mb-2">
                                     <p class="text-danger">@{{ errors?.name }}</p>
                                 </div>
-                                <label for="category_slug" class="col-md-1 col-12 mb-2">Slug*</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <input type="text" v-model="slug" name="slug" readonly id="slug"
-                                        placeholder="Type Slgu" class="form-control form-control-sm mb-2">
+
+                                <label for="code" class="col-md-2 col-12">Color Code</label>
+                                <div class="col-md-4 col-12 mb-2">
+                                    <input type="color" name="code" v-model="formValue.code"  id="code" class="form-color">
+                                    <p class="text-danger">@{{ errors?.code }}</p>
                                 </div>
-                                <label for="category_slug" class="col-md-1 col-12 mb-2 g-0">Category*</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <select name="category_id" v-model="formValue.category_id" id="" class="form-select form-select-sm">
-                                        <option value="">--Select Category--</option>
-                                        @foreach ($categories as $cat)
-                                            <option value="{{ $cat->id }}">{{ $cat->title }}</option>
-                                        @endforeach
-                                    </select>
-                                     <p>@{{ errors?.category_id }}</p>
-                                </div>
-                                <label for="meta_title" class="col-md-1 col-12">M. Title</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <input type="text" name="meta_title" v-model="formValue.meta_title" id="meta_title"
-                                        placeholder="Type Meta Title" class="form-control form-control-sm mb-2">
-                                    <p class="text-danger">@{{ errors?.meta_title }}</p>
-                                </div>
-                                <label for="meta_keyword" class="col-md-1 col-12 g-0">M_Keyword</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <input type="text" name="meta_keyword" v-model="formValue.meta_keyword" id="meta_keyword"
-                                        placeholder="Type Meta Keyword" class="form-control form-control-sm mb-2">
-                                    <p class="text-danger">@{{ errors?.meta_keyword }}</p>
-                                </div>
-                               <label for="meta_description" class="col-md-1 col-12">M. Des</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <textarea name="meta_description" class="form-control form-control-sm" id="meta_description" placeholder="Type Meta Description">@{{ formValue.meta_description }}</textarea>
-                                    <p class="text-danger">@{{ errors?.meta_description }}</p>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="card-action d-flex justify-content-end">
@@ -71,7 +46,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header overflow-hidden d-flex justify-content-between bg-secondary">
-                        <div class="card-title text-white">Category Table</div>
+                        <div class="card-title text-white">Colour Table</div>
                         <div>
                             <input type="text" v-model="searcevalue" placeholder="Search By Name" class="form-control form-control-sm">
                         </div>
@@ -83,10 +58,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Name</th>
-                                        <th>Category</th>
-                                        <th>M.Title</th>
-                                        <th>M.Key</th>
-                                        <th>M.Description</th>
+                                        <th>Code</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -94,10 +66,7 @@
                                     <tr v-for="(data,ind) in datas">
                                         <td>@{{ ind+1 }}</td>
                                         <td>@{{ data.name }}</td>
-                                        <td>@{{ data.category.title }}</td>
-                                        <td>@{{ data.meta_title }}</td>
-                                        <td>@{{ data.meta_keyword }}</td>
-                                        <td>@{{ data.meta_description }}</td>
+                                        <td>@{{ data.code }}</td>
                                         <td>
                                             <button @click="updateData(data.id)" class="btn-action">
                                                 <i class="fas fa-edit iconsize"></i>
@@ -135,10 +104,7 @@
                     datas: [],
                     formValue: {
                         name: '',
-                        category_id: '',
-                        meta_title:'',
-                        meta_keyword:'',
-                        meta_description:''
+                        code: '',
                     },
                     errors: {},
                     isEdit: {
@@ -165,21 +131,15 @@
                 },
 
                 form_reset(){
-                   
                     this.formValue= {
                         name: null,
-                        category_id: '',
-                        meta_title:null,
-                        meta_keyword:null,
-                        meta_description:''
+                        code: '',
                     },
-                    
                     this.errors = {};
                     this.isEdit = {
                         status: false,
                         id: null
                     };
-                
                 },
 
                 async saveData(e) {
@@ -188,17 +148,16 @@
                     let res;
                     if (this.isEdit.status) {
                         let editId = this.isEdit.id;
-                        res = await axios.post(`/api/subcategory/${editId}/update`, data)
+                        res = await axios.post(`/api/colour/${editId}/update`, data)
                         if(res.data.status == true){
-                            this.notify_message(res.data.message)
+                            
                             this.isEdit = {
                                 status: false,
                                 id: null
                             }
                         }
-                        
                     } else {
-                        res = await axios.post('/api/subcategory/store', data)
+                        res = await axios.post('/api/colour/store', data)
                     }
 
                     if (res.data.status == false) {
@@ -212,7 +171,7 @@
                         this.form_reset()
                         this.datas = res.data.datas;
                         loder_close();
-                        this.notify_message("succesfully kkk")
+                        this.notify_message(res.data.message)
                     }
                 },
                 
@@ -249,7 +208,7 @@
                     }).then((willDelete) => {
                         if (willDelete) {
                             loder_open()
-                            axios.delete(`/api/subcategory/${id}/destroy`)
+                            axios.delete(`/api/colour/${id}/destroy`)
                                 .then(res => {
                                     if (res.data.status) {
                                         let newdata = this.datas.filter((ele) => {
@@ -286,7 +245,8 @@
 
             watch: {
                 async searcevalue(newVal){
-                    let get_datas = await axios.get(`/api/search_subcategory/${newVal}`);
+                    console.log(newVal)
+                    let get_datas = await axios.get(`/api/colour_search/${newVal}`);
                    this.datas =  get_datas.data.datas
                 }
             },
@@ -298,7 +258,7 @@
                 }
             },
             async mounted() {
-                let datas = await axios.get('/api/admin-all_subcagegory');
+                let datas = await axios.get('/api/colour');
                 this.datas = datas.data.datas;
                 loder_close();
 
