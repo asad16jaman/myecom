@@ -28,10 +28,8 @@
                             <a href="">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
-                                
                             </a>
                         </li>
-                        
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
@@ -50,7 +48,6 @@
                                             <span class="sub-item">Index</span>
                                         </a>
                                     </li>
-                                    
                                 </ul>
                             </div>
                         </li>
@@ -131,6 +128,28 @@
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="{{ route('admin.color') }}">
+                                            <span class="sub-item">Create</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Show</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarProduct">
+                                <i class="fas fa-th-list"></i>
+                                <p>Product</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarProduct">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.product') }}">
                                             <span class="sub-item">Create</span>
                                         </a>
                                     </li>

@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ColorController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::group(['prefix' => 'admin','middleware' => 'authAdmin'],function(){
 
     //Sub Category
     Route::get('/color',[ColorController::class,'create'])->name('admin.color');
+
+    //Sub Category
+    Route::get('/product',[ProductController::class,'create'])->name('admin.product');
 
 
 });
