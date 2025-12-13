@@ -208,7 +208,7 @@
 
     <!-- Sweet Alert -->
     <script src="{{ asset('assets/admin/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
-
+    <script src="{{ asset('assets/admin/js/ckeditor.js') }}"></script>
     
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/admin/js/kaiadmin.min.js') }}"></script>

@@ -39,82 +39,94 @@
                                     <p class="text-danger">@{{ errors?.price }}</p>
                                 </div>
 
-                                <label for="category_slug" class="col-md-1 col-12 mb-2 g-0">Category*</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <select name="category_id" v-model="formValue.category_id" id="" class="form-select form-select-sm">
+                                <label for="category_slug" class="col-md-1 col-12 mb-3 g-0">Category*</label>
+                                <div class="col-md-3 col-12 mb-3">
+                                    <select name="category_id" v-model="formValue.category_id" id=""
+                                        class="form-select form-select-sm">
                                         <option value="">--Select Category--</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->title }}</option>
                                         @endforeach
                                     </select>
-                                     <p>@{{ errors?.category_id }}</p>
+                                    <p>@{{ errors?.category_id }}</p>
                                 </div>
 
-                                <label for="subcategory_id" class="col-md-1 col-12 mb-2 g-0">Sub Category*</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <select name="subcategory_id" v-model="formValue.subcategory_id" id="subcategory_id" class="form-select form-select-sm">
+                                <label for="subcategory_id" class="col-md-1 col-12 mb-3 g-0">Sub Category*</label>
+                                <div class="col-md-3 col-12 mb-3">
+                                    <select name="subcategory_id" v-model="formValue.subcategory_id" id="subcategory_id"
+                                        class="form-select form-select-sm">
                                         <option value="">--Select Sub Category--</option>
                                         @foreach ($subcategory as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                         @endforeach
                                     </select>
-                                     <p>@{{ errors?.subcategory_id }}</p>
+                                    <p>@{{ errors?.subcategory_id }}</p>
                                 </div>
 
-                                 <label for="brand_id" class="col-md-1 col-12 mb-2">Brand*</label>
-                                <div class="col-md-3 col-12 mb-2">
-                                    <select name="brand_id" v-model="formValue.brand_id" id="brand_id" class="form-select form-select-sm">
+                                <label for="brand_id" class="col-md-1 col-12 mb-3">Brand*</label>
+                                <div class="col-md-3 col-12 mb-3">
+                                    <select name="brand_id" v-model="formValue.brand_id" id="brand_id"
+                                        class="form-select form-select-sm">
                                         <option value="">--Select Brand--</option>
                                         @foreach ($brands as $brnd)
                                             <option value="{{ $brnd->id }}">{{ $brnd->name }}</option>
                                         @endforeach
                                     </select>
-                                     <p>@{{ errors?.brand_id }}</p>
+                                    <p>@{{ errors?.brand_id }}</p>
                                 </div>
 
-                               <label for="sort_description" class="col-md-1 col-12">S.Dscrpt.</label>
+                                <label for="sort_description" class="col-md-1 col-12">S.Dscrpt.</label>
                                 <div class="col-md-5 col-12 mb-2">
-                                    <textarea name="sort_description" class="form-control form-control-sm" id="sort_description" placeholder="Type Sort Description">@{{ formValue.sort_description }}</textarea>
+                                    <textarea name="sort_description" class="form-control form-control-sm"
+                                        id="sort_description" rows="4"
+                                        placeholder="Type Sort Description">@{{ formValue.sort_description }}</textarea>
                                     <p class="text-danger">@{{ errors?.sort_description }}</p>
                                 </div>
 
                                 <label for="additional_description" class="col-md-1 col-12">Addi.Dscrpt.</label>
                                 <div class="col-md-5 col-12 mb-2">
-                                    <textarea name="additional_description" class="form-control form-control-sm" id="additional_description" placeholder="Type Additional Description">@{{ formValue.additional_description }}</textarea>
+                                    <textarea name="additional_description" class="form-control form-control-sm"
+                                        id="additional_description" rows="4" 
+                                        placeholder="Type Additional Description">@{{ formValue.additional_description }}</textarea>
                                     <p class="text-danger">@{{ errors?.additional_description }}</p>
                                 </div>
 
                                 <div class="col-md-6 col-12 mb-2">
                                     <label for="description" class="">Description</label>
-                                    <textarea name="description" class="form-control" rows="6"
-                                        id="description"></textarea>
+                                    <textarea name="description" class="form-control" rows="6" v-model="formValue.description" id="description"></textarea>
                                 </div>
 
                                 <div class="col-md-6 col-12 mb-2">
-                                   <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-                                    <thead>
-                                        <tr>
-                                            <th>Size</th>
-                                            <th>Price</th>
-                                            <th>
-                                                <button class="btn btn-warning p-1 py-0 text-white btn-sm" @click.stop.prevent="addsize()">+</button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(itm,ind) in formValue.sizecontainer" :key="ind">
-                                            <td>
-                                                <input type="text" placeholder="Type Size" name="size" v-model="formValue.sizecontainer[ind].size" class="form-control form-control-sm">
-                                            </td>
-                                            <td>
-                                                <input type="number" placeholder="Type Price" name="price" v-model="formValue.sizecontainer[ind].price" class="form-control form-control-sm">
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger p-1 py-0 text-white btn-sm" @click.stop.prevent="deletesize(ind)">-</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                   </table>
+                                    <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+                                        <thead>
+                                            <tr>
+                                                <th>Size</th>
+                                                <th>Price</th>
+                                                <th>
+                                                    <button class="btn btn-warning p-1 py-0 text-white btn-sm"
+                                                        @click.stop.prevent="addsize()">+</button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(itm,ind) in formValue.sizecontainer" :key="ind">
+                                                <td>
+                                                    <input type="text" placeholder="Type Size" name="size"
+                                                        v-model="formValue.sizecontainer[ind].size"
+                                                        class="form-control form-control-sm">
+                                                </td>
+                                                <td>
+                                                    <input type="number" placeholder="Type Price" name="price"
+                                                        v-model="formValue.sizecontainer[ind].price"
+                                                        class="form-control form-control-sm">
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger p-1 py-0 text-white btn-sm"
+                                                        @click.stop.prevent="deletesize(ind)">-</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                             </div>
@@ -134,7 +146,8 @@
                     <div class="card-header overflow-hidden d-flex justify-content-between bg-secondary">
                         <div class="card-title text-white">Product Table</div>
                         <div>
-                            <input type="text" v-model="searcevalue" placeholder="Search By Name" class="form-control form-control-sm">
+                            <input type="text" v-model="searcevalue" placeholder="Search By Name"
+                                class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="card-body">
@@ -179,7 +192,6 @@
 @endsection
 
 @push('script')
-<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <script>
         function loder_open() {
             let loader = document.getElementById('loder');
@@ -191,7 +203,7 @@
             loader.classList.remove('l-d-block');
             loader.classList.add('l-d-none')
         }
-        
+
 
         Vue.createApp({
             data() {
@@ -202,57 +214,58 @@
                         category_id: '',
                         subcategory_id: '',
                         brand_id: '',
-                        sort_description:'',
-                        additional_description:'',
-                        sizecontainer:[]
+                        sort_description: '',
+                        additional_description: '',
+                        sizecontainer: []
+                        description:''
                     },
                     errors: {},
                     isEdit: {
                         status: false,
                         id: null
                     },
-                    searcevalue : ''
+                    searcevalue: ''
                 }
             },
             methods: {
-                notify_message(message){
+                notify_message(message) {
                     var content = {};
 
                     content.message = message;
                     content.icon = "fa fa-bell";
                     $.notify(content, {
                         placement: {
-                                from: 'top',
-                                align: 'right',
-                            },
-                            time: 500,
-                            delay: 0,
+                            from: 'top',
+                            align: 'right',
+                        },
+                        time: 500,
+                        delay: 0,
                     });
                 },
 
-                addsize(){
-                    this.formValue.sizecontainer.push({'size':'','price':0})
+                addsize() {
+                    this.formValue.sizecontainer.push({ 'size': '', 'price': 0 })
                 },
-                deletesize(index){
-                   this.formValue.sizecontainer.splice(index,1)
+                deletesize(index) {
+                    this.formValue.sizecontainer.splice(index, 1)
                 },
 
-                form_reset(){
-                   
-                    this.formValue= {
+                form_reset() {
+
+                    this.formValue = {
                         name: null,
                         category_id: '',
-                        meta_title:null,
-                        meta_keyword:null,
-                        meta_description:''
+                        meta_title: null,
+                        meta_keyword: null,
+                        meta_description: ''
                     },
-                    
-                    this.errors = {};
+
+                        this.errors = {};
                     this.isEdit = {
                         status: false,
                         id: null
                     };
-                
+
                 },
 
                 async saveData(e) {
@@ -262,14 +275,14 @@
                     if (this.isEdit.status) {
                         let editId = this.isEdit.id;
                         res = await axios.post(`/api/subcategory/${editId}/update`, data)
-                        if(res.data.status == true){
+                        if (res.data.status == true) {
                             this.notify_message(res.data.message)
                             this.isEdit = {
                                 status: false,
                                 id: null
                             }
                         }
-                        
+
                     } else {
                         res = await axios.post('/api/subcategory/store', data)
                     }
@@ -288,7 +301,7 @@
                         this.notify_message("succesfully kkk")
                     }
                 },
-                
+
                 updateData(id) {
                     let editData = this.datas.find((ele) => {
                         if (ele.id == id) {
@@ -303,27 +316,128 @@
                         ...editData
                     }
                 },
-                
+
 
             },
 
             watch: {
-                async searcevalue(newVal){
+                async searcevalue(newVal) {
                     let get_datas = await axios.get(`/api/search_subcategory/${newVal}`);
-                   this.datas =  get_datas.data.datas
+                    this.datas = get_datas.data.datas
                 }
             },
             computed: {
-               
+
             },
 
             async mounted() {
-                ClassicEditor
-                .create(document.querySelector('#description'), {
-                })
-                .catch(error => {
-                    console.error('CKEditor Error:', error);
+
+
+                CKEDITOR.ClassicEditor.create(document.getElementById('description'), {
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'bold', 'italic', 'strikethrough', 'underline', 'link', 'uploadImage', '|',
+                            'bulletedList', 'numberedList', 'todoList', '|',
+                            'undo', 'redo',
+                            'fontSize', 'fontColor', 'fontBackgroundColor', '|',
+                            'alignment', '|',
+                        ],
+                        shouldNotGroupWhenFull: true
+                    },
+                    list: {
+                        properties: {
+                            styles: true,
+                            startIndex: true,
+                            reversed: true
+                        }
+                    },
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                            { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                            { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                            { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                        ]
+                    },
+                    placeholder: 'Description ..',
+                    fontFamily: {
+                        options: [
+                            'default',
+                            'Arial, Helvetica, sans-serif',
+                            'Courier New, Courier, monospace',
+                            'Georgia, serif',
+                            'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                            'Tahoma, Geneva, sans-serif',
+                            'Times New Roman, Times, serif',
+                            'Trebuchet MS, Helvetica, sans-serif',
+                            'Verdana, Geneva, sans-serif'
+                        ],
+                        supportAllValues: true
+                    },
+                    fontSize: {
+                        options: [10, 12, 14, 'default', 18, 20, 22],
+                        supportAllValues: true
+                    },
+                    htmlSupport: {
+                        allow: [
+                            {
+                                name: /.*/,
+                                attributes: true,
+                                classes: true,
+                                styles: true
+                            }
+                        ]
+                    },
+                    htmlEmbed: {
+                        showPreviews: true
+                    },
+                    mention: {
+                        feeds: [
+                            {
+                                marker: '@',
+                                feed: [
+                                    '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                    '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                    '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                    '@sugar', '@sweet', '@topping', '@wafer'
+                                ],
+                                minimumCharacters: 1
+                            }
+                        ]
+                    },
+                    removePlugins: [
+                        'AIAssistant',
+                        'CKBox',
+                        'CKFinder',
+                        'EasyImage',
+                        'MultiLevelList',
+                        'RealTimeCollaborativeComments',
+                        'RealTimeCollaborativeTrackChanges',
+                        'RealTimeCollaborativeRevisionHistory',
+                        'PresenceList',
+                        'Comments',
+                        'TrackChanges',
+                        'TrackChangesData',
+                        'RevisionHistory',
+                        'Pagination',
+                        'WProofreader',
+                        'MathType',
+                        'SlashCommand',
+                        'Template',
+                        'DocumentOutline',
+                        'FormatPainter',
+                        'TableOfContents',
+                        'PasteFromOfficeEnhanced',
+                        'CaseChange'
+                    ]
                 });
+
+
+
                 let datas = await axios.get('/api/admin-all_subcagegory');
                 this.datas = datas.data.datas;
                 loder_close();
